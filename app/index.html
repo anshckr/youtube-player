@@ -10,6 +10,37 @@
 </head>
 <body>
   <div id="app"></div>
+  <div id="results"></div>
+  <input type="text" id="query"></input>
+  <button id="search-button" onclick="search()">Search</button>
   <script src="js/app.<%= version %>.js"></script>
+  <script>
+      function init() {
+        gapi.client.setApiKey('AIzaSyDHu7srsbmcnFn056jD2nge2xfI8BopYgM');
+        gapi.client.load('youtube', 'v3').then(handleAPILoaded());
+      }
+
+      // After the API loads, call a function to enable the search box.
+		function handleAPILoaded() {
+		  document.getElementById('search-button').disabled = false;
+		}
+
+		// Search for a specified string.
+		function search() {
+		  var q = document.getElementById('query').value;
+		  var request = gapi.client.youtube.search.list({
+		    q: q,
+		    part: 'snippet',
+		    maxResults: 20
+		  });
+
+		  request.execute(function(response) {
+		  	console.log(response);
+		    var str = JSON.stringify(response.result);
+		    document.getElementById('results').innerHTML = '<pre>' + str + '</pre>';
+		  });
+		}
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
 </body>
 </html>

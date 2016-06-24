@@ -7,9 +7,10 @@ import {
 } from '../constants/AppConstants';
 
 export default {
-  getItems() {
-    WebAPI.getItems()
-    .then((items) => {
+  getItems(query) {
+    WebAPI.getItems(query)
+    .execute((items) => {
+      console.log(items)
       AppDispatcher.dispatch({
         actionType: ITEMS_GET_SUCCESS,
         items: items

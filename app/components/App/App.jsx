@@ -4,6 +4,7 @@ import React from 'react';
 import AppActions from '../../actions/AppActions';
 import ItemsStore from '../../stores/ItemsStore';
 import Body from '../Body/Body';
+import Player from '../Player/Player';
 import Footer from '../Footer/Footer';
 
 function getAppState() {
@@ -18,7 +19,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     ItemsStore.addChangeListener(this.onChange);
-    AppActions.getItems();
+    // AppActions.getItems('');
   }
 
   componentWillUnmount() {

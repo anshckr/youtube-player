@@ -1,14 +1,11 @@
+var axios = require('axios');
+
 export default {
-  getItems() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(['Item 1', 'Item 2', 'Item 3'].map((item, i) => {
-          return {
-            id: i,
-            label: item
-          };
-        }));
-      }, 500);
-    });
-  }
+    getItems(query) {
+        return gapi.client.youtube.search.list({
+            q: query,
+            part: 'snippet',
+            maxResults: 20
+        });
+    }
 };
