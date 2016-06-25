@@ -1,25 +1,31 @@
 import React from 'react';
+import YouTube from 'react-youtube';
 
 let { Component, PropTypes } = React;
 
-export default class MenuItem extends Component {
-
+export default class Player extends React.Component {
+  
   static propTypes = {
     item: PropTypes.object.isRequired
   };
 
-  onItemClick = (e) => {
-    e.preventDefault();
-    window.alert('You clicked ' + this.props.item.label);
+  render() {
+    const opts = {
+      height: '195',
+      width: '320'
+    };
+
+    return (
+      <YouTube
+        videoId={this.props.item.id.videoId}
+        opts={opts}
+        onReady={this._onReady}
+      />
+    );
   }
 
-  render() {
-    return (
-      <li key={'menu-item-' + this.props.item.id}>
-        <a href="#" onClick={this.onItemClick}>
-          {this.props.item.label}
-        </a>
-      </li>
-    );
+  _onReady(event) {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
   }
 }

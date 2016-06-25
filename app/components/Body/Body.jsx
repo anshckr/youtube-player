@@ -1,25 +1,21 @@
 import styles from './_Body.scss';
 import React from 'react';
 import Menu from '../Menu/Menu';
-
-let { PropTypes } = React;
+import AppActions from '../../actions/AppActions';
 
 export default class Body extends React.Component {
 
-  static defaultProps = {
-    items: []
-  };
-
-  static propTypes = {
-    items: PropTypes.array.isRequired
-  };
+  search() {
+    let q = document.getElementById('query').value;
+    AppActions.getItems(q);
+  }
 
   render() {
     return (
       <div className={styles.body}>
-        <h1 className={styles.header}>React Seed</h1>
-        <p>Here is some example data:</p>
-        <Menu items={this.props.items} />
+        <input type="text" id="query" />
+        <button id="search-button" onClick={this.search}>Search</button>
+        <Menu />
       </div>
     );
   }
