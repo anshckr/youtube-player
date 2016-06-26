@@ -11,7 +11,6 @@ git clone --depth=1 https://github.com/anshckr/youtube-player.git my-project
 ## npm scripts
 
 * `npm start` - Build and start the app in dev mode at http://localhost:8000
-* `npm test` - Run the tests
 * `npm run build` - Run a production build
 
 ## Examples
@@ -84,11 +83,3 @@ import './index.html';
 
 * Use fat arrows for anonymous functions
 * Don't use `var`. Use `let` and `const`.
-
-
-## Releasing
-
-1. `npm version patch`
-2. `git push --follow-tags`
-3. `npm login` (Optional)
-4. `npm publish`

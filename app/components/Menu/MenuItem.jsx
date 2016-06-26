@@ -1,5 +1,4 @@
 import React from 'react';
-import YouTube from 'react-youtube';
 import $ from "jquery";
 import styles from './_Menu.scss';
 
