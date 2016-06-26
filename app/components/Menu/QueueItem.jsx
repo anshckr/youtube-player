@@ -10,6 +10,9 @@ export default class QueueItem extends React.Component {
     item: PropTypes.object.isRequired
   }
   
+  /**
+   * [_playVideo method to play video in the player]
+   */
   _playVideo() {
     if(this.props.setVideoId) {
       this.props.setVideoId(this.props.item.id.videoId, this.props.index + 1);

@@ -33,6 +33,34 @@ export default class Menu extends Component {
     this.setState(getMenuState.bind(this)());
   }
 
+  /**
+   * [handleInfiniteLoad method to be invoked to search for more results]
+   */
+  handleInfiniteLoad() {
+      let that = this;
+      if (!that.state.nextPageToken) {
+        that.setState({
+            isInfiniteLoading: false
+        });
+        return;
+      }
+      that.setState({
+          isInfiniteLoading: true
+      });
+      let q = document.getElementById('query').value;
+      AppActions.getItems(q, that.state.nextPageToken);
+  }
+
+  /**
+   * [elementInfiniteLoad method to be invoked on infiniteLoad]
+   * @return {[type]} [HTML to be shown while more scrolling]
+   */
+  elementInfiniteLoad() {
+      return <div className="infinite-list-item">
+          Loading...
+      </div>;
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -57,26 +85,5 @@ export default class Menu extends Component {
         </ul>
       </div>
     );
-  }
-
-  handleInfiniteLoad() {
-      let that = this;
-      if (!that.state.nextPageToken) {
-        that.setState({
-            isInfiniteLoading: false
-        });
-        return;
-      }
-      that.setState({
-          isInfiniteLoading: true
-      });
-      let q = document.getElementById('query').value;
-      AppActions.getItems(q, that.state.nextPageToken);
-  }
-
-  elementInfiniteLoad() {
-      return <div className="infinite-list-item">
-          Loading...
-      </div>;
   }
 }

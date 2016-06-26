@@ -9,12 +9,16 @@ import {
 export default {
     getItems (query, nextPageToken) {
         WebAPI.getItems(query, nextPageToken)
-            .execute((response) => {
+            .then((response) => {
                 AppDispatcher.dispatch({
                     actionType: ITEMS_GET_SUCCESS,
-                    items: response.items,
-                    nextPageToken: response.nextPageToken
+                    items: response.result.items,
+                    nextPageToken: response.result.nextPageToken
                 });
-            })
+            }, () => {
+                AppDispatcher.dispatch({
+                    actionType: ITEMS_GET_ERROR
+                });
+            });
     }
 };

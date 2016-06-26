@@ -10,10 +10,12 @@ export default class BaseStore extends EventEmitter {
     setAll (items, nextPageToken) {
         var existingItems = Array.from(this.data);
         if (existingItems.length) {
-          this.data = new Set(existingItems.concat(items));
+            // if there are already item in the list
+            this.data = new Set(existingItems.concat(items));
         } else {
-          this.data = new Set(items);
+            this.data = new Set(items);
         }
+        // save nextPageToken for further querying
         this.nextPageToken = nextPageToken;
         this.emitChange();
     }

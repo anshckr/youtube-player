@@ -10,6 +10,9 @@ export default class MenuItem extends React.Component {
     item: PropTypes.object.isRequired
   }
   
+  /**
+   * [_addToQueue method to add video to playlist]
+   */
   _addToQueue() {
     let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
     let itemToAdd = this.props.item;
