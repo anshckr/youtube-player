@@ -22,6 +22,11 @@ export default class BaseStore extends EventEmitter {
         return Array.from(this.data);
     }
 
+    removeAll () {
+        this.data = new Set([]);
+        this.emitChange();
+    }
+
     getNextPageToken () {
         return this.nextPageToken;
     }

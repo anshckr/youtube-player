@@ -10,7 +10,7 @@ export default class QueueItem extends React.Component {
     item: PropTypes.object.isRequired
   }
   
-  _onButtonClick() {
+  _playVideo() {
     if(this.props.setVideoId) {
       this.props.setVideoId(this.props.item.id.videoId, this.props.index + 1);
     }
@@ -22,7 +22,7 @@ export default class QueueItem extends React.Component {
     })
 
     return (
-      <li className={classes} id={this.props.item.id.videoId} onClick={this._onButtonClick.bind(this)}>
+      <li className={classes} id={this.props.item.id.videoId} onClick={this._playVideo.bind(this)}>
         {this.props.item.snippet.title}
       </li>
     );

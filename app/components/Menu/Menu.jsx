@@ -37,7 +37,7 @@ export default class Menu extends Component {
     return (
       <div className={styles.container}>
         <div className={styles.playlist}>
-            <span>Playlist</span>
+            {this.state.playlist.length ? <span>Playlist</span> : null}
             {this.state.playlist.map((item, index) => {
               return (<QueueItem key={item.id.videoId} setVideoId={this.props.setVideoId} activeId={this.props.activeId} index={index} item={item} />);
             }, this)}
@@ -76,7 +76,7 @@ export default class Menu extends Component {
 
   elementInfiniteLoad() {
       return <div className="infinite-list-item">
-          Loading more...
+          Loading...
       </div>;
   }
 }

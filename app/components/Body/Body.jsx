@@ -3,6 +3,7 @@ import React from 'react';
 import Menu from '../Menu/Menu';
 import YouTube from 'react-youtube';
 import $ from "jquery";
+import ItemsStore from '../../stores/ItemsStore';
 import AppActions from '../../actions/AppActions';
 
 export default class Body extends React.Component {
@@ -12,7 +13,8 @@ export default class Body extends React.Component {
     nextIndex: null
   }
 
-  search() {
+  _search() {
+    ItemsStore.removeAll();
     let q = document.getElementById('query').value;
     AppActions.getItems(q);
   }
@@ -35,6 +37,12 @@ export default class Body extends React.Component {
     }
   }
 
+  _hanleKeyPress(event) {
+    if(event.key == 'Enter'){
+      this._search();
+    }
+  }
+
   render() {
     const opts = {
       height: '390',
@@ -46,8 +54,8 @@ export default class Body extends React.Component {
 
     return (
       <div className={styles.body}>
-        <input type="text" id="query" className={styles.input} />
-        <button id="search-button" className={styles.search} onClick={this.search}>Search</button>
+        <input type="text" id="query" className={styles.input} onKeyPress={this._hanleKeyPress.bind(this)} />
+        <button id="search-button" className={styles.search} onClick={this._search}>Search</button>
         <Menu activeId={this.state.videoId} setVideoId={this._setVideoId.bind(this)}/>
         {this.state.videoId ? 
           <YouTube videoId={this.state.videoId} opts={opts} onReady={this._onReady} onEnd={this._playNext.bind(this)} />
