@@ -8,7 +8,12 @@ export default class BaseStore extends EventEmitter {
     }
 
     setAll (items, nextPageToken) {
-        this.data = new Set(items);
+        var existingItems = Array.from(this.data);
+        if (existingItems.length) {
+          this.data = new Set(existingItems.concat(items));
+        } else {
+          this.data = new Set(items);
+        }
         this.nextPageToken = nextPageToken;
         this.emitChange();
     }

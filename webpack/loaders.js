@@ -9,6 +9,7 @@ var jsxLoader;
 var sassLoader;
 var cssLoader;
 var fileLoader = 'file-loader?name=[path][name].[ext]';
+var urlLoader = 'url-loader?limit=10000&mimetype=application/font-woff';
 var htmlLoader = [
   'file-loader?name=[path][name].[ext]',
   'template-html-loader?' + [
@@ -69,7 +70,7 @@ var loaders = [
     loader: cssLoader
   },
   {
-    test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$|\.woff$|\.ttf$/,
+    test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$|\.woff$|\.ttf$|\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
     loader: fileLoader
   },
   {
@@ -84,6 +85,10 @@ var loaders = [
   {
     test: /\.scss$/,
     loader: sassLoader
+  },
+  {
+    test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: urlLoader
   }
 ];
 

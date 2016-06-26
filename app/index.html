@@ -20,7 +20,9 @@
 
       // After the API loads, call a function to enable the search box.
 		function handleAPILoaded() {
-		  // document.getElementById('search-button').disabled = false;
+		  setTimeout(() => {
+		    document.getElementById('search-button').disabled = false;
+		  }, 1000);
 		}
     </script>
     <script src="https://apis.google.com/js/client.js?onload=init"></script>

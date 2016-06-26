@@ -1,10 +1,37 @@
+.container {
+	position: relative;
+}
+
 .menu {
   background: #eee;
   border-radius: 8px;
-  padding: 10px 10px 10px 40px;
-  width: 350px;
+  padding: 10px 10px 10px 10px;
+  display: inline-block;
+  width: 500px;
   span {
   	display: inline-block;
   	margin: 10px 0;
   }
+}
+
+.link {
+	margin: 10px 0;
+	&:hover {
+	  	cursor: pointer;
+	  	color: blue;
+	  }
+}
+
+.playlist {
+	margin: 10px 10px;
+	display: inline-block;
+	position: absolute;
+	top: 0px;
+	left: 550px;
+	height: 530px;
+    overflow: auto;
+}
+
+.active {
+	color: orange;
 }

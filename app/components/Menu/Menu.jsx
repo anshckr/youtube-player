@@ -1,6 +1,7 @@
 import styles from './_Menu.scss';
 import React from 'react';
 import MenuItem from './MenuItem';
+import QueueItem from './QueueItem';
 import ItemsStore from '../../stores/ItemsStore';
 import Infinite from 'react-infinite';
 import AppActions from '../../actions/AppActions';
@@ -8,11 +9,11 @@ import AppActions from '../../actions/AppActions';
 let { Component, PropTypes } = React;
 
 function getMenuState() {
-  var localStorageItems = JSON.parse(localStorage.getItem('all_items'));
   return {
-    items: localStorageItems && localStorageItems.length ? localStorageItems.concat(ItemsStore.getAll()) : ItemsStore.getAll(),
+    items: ItemsStore.getAll(),
     isInfiniteLoading: false,
-    nextPageToken: ItemsStore.getNextPageToken()
+    nextPageToken: ItemsStore.getNextPageToken(),
+    playlist: JSON.parse(localStorage.getItem('playlist')) || []
   };
 }
 
@@ -29,33 +30,41 @@ export default class Menu extends Component {
   }
 
   onChange = () => {
-    this.setState(getMenuState());
-    var items = JSON.parse(localStorage.getItem('all_items')) || [];
-    items = items.concat(getMenuState().items);
-    localStorage.setItem('all_items', JSON.stringify(items));
+    this.setState(getMenuState.bind(this)());
   }
 
   render() {
     return (
-      <ul className={styles.menu}>
-        <Infinite elementHeight={195}
-                       containerHeight={500}
-                       infiniteLoadBeginEdgeOffset={100}
-                       onInfiniteLoad={this.handleInfiniteLoad.bind(this)}
-                       loadingSpinnerDelegate={this.elementInfiniteLoad()}
-                       isInfiniteLoading={this.state.isInfiniteLoading}
-                       >
-          {this.state.items.map((item) => {
-            return (<MenuItem key={item.id.videoId} item={item} />);
-          }, this)}
-      </Infinite>
-      </ul>
+      <div className={styles.container}>
+        <div className={styles.playlist}>
+            <span>Playlist</span>
+            {this.state.playlist.map((item, index) => {
+              return (<QueueItem key={item.id.videoId} setVideoId={this.props.setVideoId} activeId={this.props.activeId} index={index} item={item} />);
+            }, this)}
+        </div>
+        <ul className={styles.menu}>
+          <Infinite elementHeight={38}
+                         containerHeight={500}
+                         infiniteLoadBeginEdgeOffset={200}
+                         onInfiniteLoad={this.handleInfiniteLoad.bind(this)}
+                         loadingSpinnerDelegate={this.elementInfiniteLoad()}
+                         isInfiniteLoading={this.state.isInfiniteLoading}
+                         >
+            {this.state.items.map((item) => {
+              return (<MenuItem item={item} onChange={this.onChange.bind(this)}/>);
+            }, this)}
+          </Infinite>
+        </ul>
+      </div>
     );
   }
 
   handleInfiniteLoad() {
-      var that = this;
+      let that = this;
       if (!that.state.nextPageToken) {
+        that.setState({
+            isInfiniteLoading: false
+        });
         return;
       }
       that.setState({
@@ -67,7 +76,7 @@ export default class Menu extends Component {
 
   elementInfiniteLoad() {
       return <div className="infinite-list-item">
-          Loading...
+          Loading more...
       </div>;
   }
 }
