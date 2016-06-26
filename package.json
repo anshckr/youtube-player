@@ -1,6 +1,6 @@
 {
   "name": "youtube-player",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Project for searching and playing YouTube videos",
   "repository": "https://github.com/anshckr/youtube-player",
   "config": {
